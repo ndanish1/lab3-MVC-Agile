@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using MVCAgile_ProcessWith_Agile.Models;
 using System.Diagnostics;
 
-namespace MVCAgile_ProcessWith_Agile.Controllers
+namespace MvcMovie.Controllers
 {
     public class HomeController : Controller
     {

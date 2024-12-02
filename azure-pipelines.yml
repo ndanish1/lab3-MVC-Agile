@@ -17,15 +17,12 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-# Step 1: Install NuGet tool
 - task: NuGetToolInstaller@1
 
-# Step 2: Restore NuGet packages
 - task: NuGetCommand@2
   inputs:
     restoreSolution: '$(solution)'
 
-# Step 3: Build the project
 - task: VSBuild@1
   inputs:
     solution: '$(solution)'
@@ -33,33 +30,7 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
-# Step 4: Run tests (optional)
 - task: VSTest@2
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
-
-# Step 5: Publish the build artifact (WebApp.zip)
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(build.artifactStagingDirectory)\WebApp.zip'
-    ArtifactName: 'lab4-agile-feed'
-    publishLocation: 'Container'
-
-# Release Pipeline (Deploy to IIS or another target environment)
-# This step will be triggered by the release pipeline and can be set up in the release UI.
-- stage: DeployToIIS
-  jobs:
-  - job: IISDeployment
-    pool:
-      name: 'default'
-      demands:
-        - agent.name -equals AgentSelfHosted
-    steps:
-    - task: IISWebAppDeploy@0
-      inputs:
-        WebAppName: 'MVCAgile_ProcessWith_Agile'
-        Package: '$(Pipeline.Workspace)/_WebAppArtifact/WebApp.zip'
-        IISWebSiteName: 'Default Web Site'
-        RemoveAdditionalFiles: true
-        SetParametersFile: '$(Build.SourcesDirectory)/SetParameters.xml'

@@ -39,3 +39,18 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+
+static void Main()
+{
+    Console.WriteLine("Enter a string:");
+    string input = Console.ReadLine();
+
+    // Output original string
+    Console.WriteLine($"Original string: {input}");
+
+    // Output string in uppercase
+    Console.WriteLine($"Uppercase string: {input.ToUpper()}");
+
+    Console.WriteLine("Press any key to exit.");
+    Console.ReadKey();
+}
